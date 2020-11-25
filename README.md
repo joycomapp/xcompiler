@@ -40,7 +40,22 @@ You also put your code in atg to generate code of destination language.
 
 Please see example at https://github.com/jackieju/abap2ruby.
 
-List of atg files(EBNF) for popular langauge: https://github.com/jackieju/xcompiler/tree/master/cocoR/cocor17/samples 
+List of atg files(EBNF) for popular langauge: https://github.com/jackieju/xcompiler/tree/master/cocoR/cocor17/samples n
+
+***NOTICE: In ATG file, please do not change the Name of Compiler (which is "C") and the name of root rule (also is "C").
+Usually, the first line of atg file define the compiler name
+<pre>
+COMPILER C
+</pre>
+and the last line close the definition
+<pre>
+END C.
+</pre>
+Root rule
+<pre>
+  C  = { Definition } EOF .
+</pre>
+
 
 3. Modify macro.rb to do preprocessing
 
