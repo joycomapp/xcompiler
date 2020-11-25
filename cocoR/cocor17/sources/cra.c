@@ -1154,6 +1154,7 @@ int GenScannerOptions(FILE *Out, char *option)
 {
 	fscan = Out;
 	if (!stricmp(option, "IgnoreCase")) {
+        printf("===>gencode for ignorecase:%d\n", ignore_case);
 		GenCode(fscan, "%d", ignore_case);
 	} else
 	if (!stricmp(option, "State0")) {

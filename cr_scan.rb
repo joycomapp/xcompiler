@@ -111,7 +111,7 @@ end
 
 # from CR_SCAN.hpp
 class CRScanner < AbsScanner 
-
+    attr_accessor :ignoreCase
   public
     def initialize()
         super
@@ -131,6 +131,12 @@ class CRScanner < AbsScanner
        # p "next sym = #{nextSym}"
         #p "init CRScanner OK"
     end 
+    
+    # print status
+    def pst
+        p "==>currrent sym string:#{GetSymString(@nextSym)}"
+        p "buffer:#{@buffer[0..20]}"
+    end
 
     # def CRScanner(ignoreCase)
     #     @buffer = NULL

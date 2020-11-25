@@ -1,7 +1,7 @@
 load "cr_scan.rb"
 
-load 'cocoR/o/cscanner.rb'
-load 'cocoR/o/_global_.rb'
+load 'o/cscanner.rb'
+load 'o/_global_.rb'
 
 load "rubyutility.rb"
 load "log.rb"
@@ -300,6 +300,13 @@ class String
         end
         super
     end
+    def >=(s)
+        if s.class == Integer
+            return self.ord >= s
+        end
+        super
+    end
+    
 end
 
            MAX_IDENTIFIER_LENGTH = 1000

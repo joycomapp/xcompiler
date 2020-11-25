@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
   }
 
   // instantiate Scanner, Parser and Error handler
-  Scanner = new cScanner(S_src, 0);
+  Scanner = new cScanner(S_src, 1);
   Error   = new MyError(SourceName, Scanner);
   Parser  = new cParser(Scanner, Error);
 

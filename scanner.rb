@@ -2,7 +2,13 @@ load "crr_scan.rb"
 load "rubyutility.rb"
 load "log.rb"
 
-IGNORECASE=true
+# although cocoR's atg file can specify ignore case option, but it only affect the generated main(), in which 
+# create scanner with ignore case = 1
+#      Scanner = new cScanner(S_src, 1);
+# So it dosen't affect the compiler itself.
+# So we have to have this global constant IGNORECASE
+IGNORECASE=false
+
 # over write Upcase funciton in cocor/o/_global_.rb
 def Upcase(c)
     c.upcase

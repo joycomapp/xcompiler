@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 // only on mac
-static print_stack(){
+print_stack(){
     void* callstack[128];
     int i, frames = backtrace(callstack, 128);
     char** strs = backtrace_symbols(callstack, frames);

@@ -5,6 +5,10 @@
 #include "crt.h"
 #include "crf.h"
 
+// for debug, print filename from FILE *, for mac
+//#include <sys/syslimits.h>
+//#include <fcntl.h>
+
 char compiler_name[MAX_ID_LEN];
 char module_prefix[MAX_ID_LEN];
 char source_name[100];
@@ -42,6 +46,8 @@ void InitFrameVars(void)
 
 void SetupFrameVars(void)
 {
+    printf("GenCplusplus:%d\n", GenCplusplus);
+    strlen(Frames_Path) > 0) 
 		if (strlen(Frames_Path) > 0) {
 #if __MSDOS__ || MSDOS || WIN32 || __WIN32__
 			if (GenCplusplus) strcat(Frames_Path, "\\cplus2\\");
@@ -52,6 +58,7 @@ void SetupFrameVars(void)
 #endif
 		}
 
+        printf("Frames_Path:%s\n",Frames_Path );
 	sprintf(Scan_C_Format, "%%ss.%s", c_ext);
 	sprintf(Scan_H_Format, "%%ss.%s", h_ext);
 	sprintf(Parser_C_Format, "%%sp.%s", c_ext);
@@ -248,7 +255,9 @@ static void GenCharSet(FILE *out, Set *set)
 void GenCode(FILE *out, char *fmt, ...)
 {
 	va_list ap;
-
+    
+    printf("gencode:%s\n",fmt);
+    char *str ;
 	va_start(ap, fmt);
 	for ( ; *fmt; fmt++)
 		if (*fmt == '%')
@@ -263,7 +272,9 @@ void GenCode(FILE *out, char *fmt, ...)
 				fprintf(out, "%c", va_arg(ap, int));
 				break;
 			case 's':
-				fputs(va_arg(ap, char *), out);
+                str = va_arg(ap, char *);
+                printf("string:%s\n", str);
+				fputs(str, out);
 				break;
 			case '#':
 				{
@@ -352,7 +363,27 @@ void GenCode(FILE *out, char *fmt, ...)
 				CurrCol++;
 			}
 	va_end(ap);
-}
+    
+    //// for debug, get file name from FILE*
+    // on linx
+     //char path[1024];
+     //char result[1024];
+     //int fd = fileno(out); 
+     //sprintf(path, "/proc/self/fd/%d", fd);
+     //memset(result, 0, sizeof(result));
+     //readlink(path, result, sizeof(result)-1);
+     //
+     ///* Print the result. */
+     //printf("===>out file:%s\n", result);
+    //
+    // on mac
+    //char filePath[PATH_MAX];
+    //if (fcntl(out, F_GETPATH, filePath) != -1)
+    //{
+    //   printf("===>out file:%s\n", filePath);
+    //}
+    print_stack();
+}    
 
 /* return symbolic character name */
 void SymCharName(unsigned char c, char *asciiname)
@@ -502,6 +533,7 @@ void SymCharName(unsigned char c, char *asciiname)
 
 FILE *OpenFile(char *name, char *op, int GenError)
 {
+    printf("===>open file:%s\n", name);
 	FILE *F;
 	if((F = fopen(name, op)) == NULL) {
 	if (GenError) {
@@ -568,13 +600,15 @@ static void ProcessFrame(FILE *In, FILE *Out, char *Prefix)
 		if (!stricmp(option, "ENDFILE")) break;
 	}
 }
-
+//extern char g_szCurrentDir[512];
 static void GenFrame(char *Prefix, char *InName, char *OutName)
 {
 	FILE *InFile, *OutFile;
 	char FileName[100];
 
+    printf("Frames_Path:%s\n", Frames_Path);
 	sprintf(FileName, "%s%s", Frames_Path, InName);
+    printf("Filename:%s\n", FileName);
 	InFile = OpenFile(FileName, "r", 1);
 
 	sprintf(FileName, OutName, Prefix);
@@ -594,6 +628,7 @@ void GenCompiler()
 
 	sprintf(FileName, Compiler_Format, module_prefix);
 	OutFile = OpenFile(FileName, "w", 1);
+    printf("outfile:%s, %x\n", FileName, OutFile);
 
 	sprintf(FileName, "%s.frm", module_prefix);
 	InFile = OpenFile(FileName, "r", 0);
@@ -606,6 +641,7 @@ void GenCompiler()
 
 	fclose(InFile);
 	fclose(OutFile);
+    printf("GenCompiler return\n");
 }
 
 /* generate compiler */

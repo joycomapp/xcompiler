@@ -1,48 +1,72 @@
+#!/bin/bash
 set -e
+
+START_DIR=`pwd`
+BASEDIR=$(dirname "$0")
+echo basedir=$BASEDIR
+echo start_dir=$START_DIR
+
+echo export CRFRAMES=$BASEDIR
+export CRFRAMES=$BASEDIR
+
+
+if [ "$BASEDIR" = "$START_DIR" ] || [ "$BASEDIR" = "." ]; then
+    echo 
+else
+    cp $BASEDIR/../*.rb $START_DIR/
+fi
+    
+
 
 atgfile=$1
 
-cpp2ruby_dir=../../CPP2Ruby
+cpp2ruby_dir=$BASEDIR/../../CPP2Ruby
 
 # cocor execute
-cocor=./cocor
+cocor=$BASEDIR/cocor
 
 #cd cocoR
 
 #test grammar
-$cocor $atgfile
+$cocor -X $atgfile
 
 # generate parser in c
 $cocor -A -F -X -S -G -C -L -D $atgfile
 
-mkdir -p output
+output_dir=$START_DIR/output
+mkdir -p $output_dir
+
 # cp or move generated parser to output for converting to ruby
-#cp cs.c          output
-#cp cs.h          output
-#cp cp.c          output
-#cp cp.h          output
-#cp ce.h          output
-#cp cc.h          output
-mv cs.cpp        output
-cp cs.hpp        output
-mv cp.cpp        output
-cp cp.hpp        output
-mv ce.hpp        output
-mv cc.hpp        output
-#cp c.cpp         output
-#cp abap.lst      output
-cp CR_SCAN.hpp output
-cp CR_ABS.hpp output
-cp CR_PARSE.hpp output
+#cp cs.c         $output_dir
+#cp cs.h         $output_dir
+#cp cp.c         $output_dir
+#cp cp.h         $output_dir
+#cp ce.h         $output_dir
+#cp cc.h         $output_dir
+mv cs.cpp        $output_dir
+mv cs.hpp        $output_dir
+mv cp.cpp        $output_dir
+mv cp.hpp        $output_dir
+mv ce.hpp        $output_dir
+mv cc.hpp        $output_dir
+#cp c.cpp        $output_dir
+rm c.cpp
+#cp abap.lst     $output_dir
+cp $BASEDIR/CR_SCAN.hpp  $output_dir
+cp $BASEDIR/CR_ABS.hpp   $output_dir
+cp $BASEDIR/CR_PARSE.hpp $output_dir
 
 # translate parser from c to ruby
 dir=`pwd`
 echo current dir $dir
 cd $cpp2ruby_dir
-ruby translate.rb $dir/output/*.cpp -d $dir/o
+ruby translate.rb $output_dir/*.cpp -d $dir/o
+
+
+
 cd $dir
 cd ..
-./gen_sym.rb cocoR/output/cc.hpp
+#./gen_sym.rb $output_dir/cc.hpp
 
 echo DONE !
 

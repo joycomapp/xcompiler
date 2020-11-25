@@ -67,7 +67,7 @@ int          A_option = FALSE;    /* TRUE => Automata */
 int          O_option = FALSE;    /* TRUE => Generate OR only Terminal Conditions */
 int          GenCplusplus = FALSE;
 
-char Frames_Path[100] = "";
+char Frames_Path[100] = ".";
 char c_ext[100] = "c";
 char h_ext[100] = "h";
 

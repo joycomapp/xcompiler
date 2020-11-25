@@ -268,8 +268,41 @@ static void FileGetName(char *name, char *filename)
    name[i]='\0';
 }
 
+/*
+char g_szCurrentDir[512]="";
+
+void OSInitCurrentDirectory(void)
+{
+#ifdef WIN32
+	char *pPath = NULL;
+
+	// Cut the file name, reserve the path name
+	if ( GetModuleFileName( NULL, g_szCurrentDir, 512 ) != 0 )
+	{
+		if ((pPath = strrchr(szPath, '\\')) == NULL)
+		{
+			printf("Error in parsing path: %s, and we use default path:'.'\n", szPath);
+			strcpy(szPath, ".");
+		}
+
+		*pPath = 0;
+	}
+	else
+	{
+		printf("Error in parsing path: %s, and we use default path:'.'\n", szPath);
+		strcpy(g_szCurrentDir, ".");
+	}
+#else
+	getcwd(g_szCurrentDir, 512);
+#endif
+}
+*/
 int main(int argc, char *argv[])
 {
+    
+    
+//  OSInitCurrentDirectory();
+  
   char name[100];
   lst = stderr;
   if (argc == 1) {
@@ -353,7 +386,7 @@ int main(int argc, char *argv[])
   printf("-->8\n");
   
   DoneScannerTab();
-  printf("-->9:%d\n", EXIT_SUCCESS);
+  printf("-->cocor return:%d\n", EXIT_SUCCESS);
   
   return (EXIT_SUCCESS);
 }

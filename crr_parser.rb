@@ -168,7 +168,7 @@ class CRRParser < CRParser
 
         if @scanner.nextSym.sym == C_identifierSym
 
-            ret = ret.downcase if IGNORECASE  
+            ret = ret.downcase if @scanner.ignoreCase  
         end
         # p "------#{@scanner}"
         return ret
@@ -178,7 +178,7 @@ class CRRParser < CRParser
         ret = @scanner.GetSymValue(@scanner.currSym)
         if @scanner.currSym.sym == C_identifierSym
 
-            ret = ret.downcase if IGNORECASE  
+            ret = ret.downcase if @scanner.ignoreCase  
         end
         # p "------#{@scanner}"
         return ret

@@ -6,7 +6,7 @@ load 'crr_parser.rb'
 load 'error.rb'
 load 'log.rb'
 load 'common.rb'
-load 'cocoR/o/cparser.rb'
+load 'o/cparser.rb'
 
 # overwrite for abap, which doesn't have overloading
 class ModuleDef < Scope
@@ -713,6 +713,6 @@ HERE
 
 end  # class Parser
 
-load "cocoR/o/cparser.rb"
+#load "cocoR/o/cparser.rb"
 
-load 'cptest.rb'
+#load 'cptest.rb'
