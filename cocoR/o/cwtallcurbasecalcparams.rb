@@ -1,0 +1,5 @@
+class CWTAllCurBaseCalcParams
+
+
+
+end

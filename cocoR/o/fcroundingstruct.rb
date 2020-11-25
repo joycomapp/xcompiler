@@ -1,0 +1,5 @@
+class FCRoundingStruct
+
+
+
+end

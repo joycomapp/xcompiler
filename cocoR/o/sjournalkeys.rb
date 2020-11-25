@@ -1,0 +1,5 @@
+class SJournalKeys
+
+
+
+end
